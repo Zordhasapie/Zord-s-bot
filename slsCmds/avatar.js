@@ -8,7 +8,9 @@ module.exports = {
 		.addUserOption(option => option.setName('target').setDescription('The user\'s avatar to show')),
 	async execute(interaction) {
 		const user = interaction.options.getUser('target') || interaction.user;
-		const member = interaction.member;
+		const guild = interaction.guild;
+		const member = guild.members.cache.get(user.id);
+		// const member = interaction.guild.
 		const msg_emb = new MessageEmbed()
 			.setColor("DARK_AQUA")
 			.setTitle(`${member.displayName}'s avatar`)
