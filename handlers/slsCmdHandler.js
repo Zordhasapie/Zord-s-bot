@@ -4,7 +4,7 @@ const { Routes } = require('discord-api-types/v9');
 
 module.exports = (client) => {
     const cmds = fs.readdirSync("./slsCmds/").filter(f => f.split(".").pop() === "js");
-    console.log(cmds.length);
+    // console.log(cmds.length);
     const commands = [];
 
     for (const file of cmds) {
