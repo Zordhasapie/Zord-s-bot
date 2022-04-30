@@ -7,7 +7,9 @@ module.exports = (client) => {
   events.forEach(f => {
     var event = require(`../events/${f}`);
 
-    client.on(event.name, (...args) => event.execute(client, ...args));
+    client.on(event.name, (...args) => event.execute(client, ...args)); 
+    delete require.cache[require.resolve(`../events/${f}`)];
   });
+
   console.log(`Loaded ${events.length} events`);
 };

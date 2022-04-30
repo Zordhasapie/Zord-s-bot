@@ -5,7 +5,7 @@ module.exports = {
 		if (!interaction.isCommand()) return;
     const command = client.slsCmds.get(interaction.commandName);
     if (!command) return;
-    console.log("cmd trigged");
+    // console.log("cmd trigged");
     try {
         await command.execute(interaction);
     } catch (error) {

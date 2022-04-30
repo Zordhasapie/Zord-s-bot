@@ -1,10 +1,11 @@
 const fs = require("fs");
+const { MessageEmbed } = require("discord.js");
 // const GuildSettings = require("../models/settings.js")
 // const GuildCommands = require("../models/commands.js");
 
 module.exports = {
   name: 'messageCreate',
-  async execute(client, message) {
+  async execute(client, message, Discord) {
     // let storedSettings = await GuildSettings.findOne({
     //   GuildID: message.guild.id,
     // });
@@ -27,14 +28,22 @@ module.exports = {
     const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
     if (!cmd) return;
     try {
+      // if (cmd.permissions && cmd.permissions.length > 0 && !message.member.permissions.has(cmd.permissions)) {
+      //   const embeds = new MessageEmbed()
+      //     .setColor("RED")
+      //     .setFooter({ text: "SOME ERROR OCCURED" })
+      //     .setTitle("Your are not allowed to execute this command")
+      //     .setDescription("You Dont Have Enough Permissons to use this command");
+      //   message.reply({ embeds: [embeds]});
+      //   return;
       if (cmd.permissions && cmd.permissions.length > 0 && !message.member.permissions.has(cmd.permissions)) {
         return message.reply({
-          embeds: [new Discord.MessageEmbed()
+          embeds: [new MessageEmbed()
             .setColor("RED")
-            .setFooter("SOME ERROR OCCURED")
-            .setTitle(replacemsg("Your are not allowed to execute this command"))
-            .setDescription(replacemsg("You Dont Have Enough Permissons to use this command"))]
-        }).then(msg => { setTimeout(() => { msg.delete().catch((e) => { console.log(String(e).grey) }) }, "You Are not Allowed to execute this command") }).catch((e) => { console.log(String(e).grey) });
+            .setFooter({ text:"SOME ERROR OCCURED"})
+            .setTitle("Your are not allowed to execute this command")
+            .setDescription("You Dont Have Enough Permissons to use this command")]
+        })
       }
 
       // let check = await GuildCommands.findOne({ GuildID: message.guild.id, })
@@ -48,7 +57,7 @@ module.exports = {
 
     } catch (error) {
       console.log("ERROR: " + error)
-      message.channel.send(error);
+      message.channel.send("error");
     }
 
   },
